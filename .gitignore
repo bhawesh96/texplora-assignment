@@ -1,0 +1,11 @@
+# Ignore log files
+**/RecurrentTransactions/Logs/*.log
+
+# Ignore compiled Python files
+*.pyc
+__pycache__/
+
+# Ignore macOS .DS_Store files
+.DS_Store
+
+.idea
