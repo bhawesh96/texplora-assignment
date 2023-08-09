@@ -43,12 +43,15 @@ class Transaction:
     def is_holiday(self):
         return self.get_adjusted_display_date() in SC.holiday_dates_italy_2022
 
+    # get display date for adjusted date
     def get_adjusted_display_date(self):
         return datetime.strftime(self.adjusted_date, "%d-%m-%Y")
 
+    # get display date for original date
     def get_orig_display_date(self):
         return datetime.strftime(self.date_, "%d-%m-%Y")
 
+    # set adjusted date
     def set_adjusted_date(self, adjusted_date):
         self.adjusted_date = adjusted_date
 
@@ -73,7 +76,7 @@ class DuplicateTransaction:
         self.date_gaps = Counter(self.date_diff)
 
     # basis the frequency, find the Plan
-    # Note:
+    # Note: buffers have been added
     def set_plan_from_frequency(self):
         daily_gap = all(1 <= gap <= 3 for gap in self.date_gaps)
         weekly_gap = all(5 <= gap <= 9 for gap in self.date_gaps)
@@ -116,8 +119,6 @@ Find all recurrent transactions based on reference, payable amt and receivable a
 :param orig_df: the original dataframe read from the CSV
 :return: map of duplicate transactions with the occurring dates
 """
-
-
 def find_recurrent_transactions(account, orig_df):
     df = orig_df[orig_df[SC.BRANCH_CODE] == account]  # dataframe for this account
 
@@ -150,7 +151,7 @@ def find_recurrent_transactions(account, orig_df):
                 transaction_obj.set_adjusted_date(DTUtils.convert_weekend_to_monday(transaction_obj.date_))
 
             if transaction_obj.is_holiday():  # if holiday, make it next working day
-                LOG.info('{} - This transaction was held on a holiday ().Converting it to the next working day'.
+                LOG.info('{} - This transaction was held on a holiday ({}). Converting it to the next working day'.
                          format(transaction_obj.get_key_tuple(), transaction_obj.get_adjusted_display_date()))
                 transaction_obj.set_adjusted_date(transaction_obj.date_ + timedelta(1))
 
@@ -168,8 +169,6 @@ Handle the duplicate transactions by finding the frequency and arriving at a rec
 :param dup_map: the duplicate transactions' map
 :return: list of DuplicateTransaction objects
 """
-
-
 def handle_duplicate_transactions(account, dup_map):
     duplicate_transactions = list()
 
