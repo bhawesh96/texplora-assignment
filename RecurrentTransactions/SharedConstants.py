@@ -11,8 +11,9 @@ holiday_dates_italy_2022 = [
     "26-12-2022"
 ]
 
-log_dir = './task1'
-log_filename = 'task1_{}.log'
+log_dir = './Logs'
+log_filename = 'RecurrentTransactions_{}.log'
+input_csv_filename = 'test_mastrini.csv'
 output_csv_filename = 'output.csv'
 
 # Column names
@@ -23,7 +24,7 @@ DATE = 'Date'
 REFERENCE = 'Reference'
 PAYABLE = 'Payable'
 RECEIVABLE = 'Receivable'
-PLAN = 'PLAN'
+PLAN = 'Plan'
 
 COL_HEADERS = [BRANCH_CODE, DATE, REFERENCE, PLAN, PAYABLE, RECEIVABLE]
 
@@ -31,6 +32,6 @@ COL_HEADERS = [BRANCH_CODE, DATE, REFERENCE, PLAN, PAYABLE, RECEIVABLE]
 DAILY = 'Daily'
 WEEKLY = 'Weekly'
 MONTHLY = 'Monthly'
-NO_PATTERN = 'No Pattern'
+OTHER = 'Other'
 
-MIN_TXN_AMT = 1  # 1 euro
+MIN_TXN_AMT = 1  # 1 Euro
